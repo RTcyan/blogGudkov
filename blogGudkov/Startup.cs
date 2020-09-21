@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using blogGudkov.Domain.DB;
+using blogGudkov.Domain.Model;
 using blogGudkov.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +30,17 @@ namespace blogGudkov
         {
             services.AddControllersWithViews();
             services.Configure<ServerInformation>(Configuration.GetSection("ServerInformation"));
+
+            services.AddDbContext<BlogDbContext>(options =>
+                options.UseNpgsql("Username=postgres;Database=blog;Password=111111;Host=localhost"));
+
+            services.AddIdentity<User, IdentityRole<int>>(options =>
+            {
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
+            }).AddEntityFrameworkStores<BlogDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +61,7 @@ namespace blogGudkov
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
