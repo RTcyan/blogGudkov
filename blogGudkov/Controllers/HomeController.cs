@@ -31,23 +31,27 @@ namespace blogGudkov.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Возвращает Index страницу для Home контроллера
         /// </summary>
-        /// <returns>Вид</returns>
+        /// <returns>Страница Index</returns>
         public IActionResult Index()
         {
             return View();
         }
 
         /// <summary>
-        /// 
+        /// Возвращает Privacy страницу для Home контроллера
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Политика конфедициальности</returns>
         public IActionResult Privacy()
         {
             return View();
         }
 
+        /// <summary>
+        /// Возвращает страницу ошибки
+        /// </summary>
+        /// <returns>Страница ошибки</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -11,6 +11,10 @@ namespace blogGudkov.Controllers
     /// </summary>
     public class BlogController : Controller
     {
+        /// <summary>
+        /// Возвращает Index страницу для Blog контроллера
+        /// </summary>
+        /// <returns>Страница Index</returns>
         public IActionResult Index()
         {
             return View();
