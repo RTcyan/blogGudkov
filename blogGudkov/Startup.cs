@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using blogGudkov.Domain.DB;
 using blogGudkov.Domain.Model;
+using blogGudkov.Infrastructure;
+using blogGudkov.Infrastructure.Guarantors;
 using blogGudkov.Options;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +34,7 @@ namespace blogGudkov
             services.Configure<ServerInformation>(Configuration.GetSection("ServerInformation"));
 
             services.AddDbContext<BlogDbContext>(options =>
-                options.UseNpgsql("Username=postgres;Database=blog;Password=111111;Host=localhost"));
+                options.UseNpgsql("Username=postgres;Database=blog;Password=postgres;Host=localhost"));
 
             services.AddIdentity<User, IdentityRole<int>>(options =>
             {
@@ -41,6 +43,8 @@ namespace blogGudkov
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
             }).AddEntityFrameworkStores<BlogDbContext>();
+
+			services.AddSingleton<IStartupPreConditionGuarantor, SeedDataGuarantor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -20,11 +20,18 @@ namespace blogGudkov.Domain.DB
             Database.EnsureCreated();
         }
 
+        /// <summary>
+        /// Пользователи
+        /// </summary>
         public override DbSet<User> Users { get; set; }
 
+        /// <summary>
+        /// Пост блога
+        /// </summary>
         public DbSet<BlogPost> BlogPosts { get; private set; }
 
-        public override void OnModelCreating(ModelBuilder modelBuilder)
+        /// <inheritdoc/>
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
@@ -81,6 +88,12 @@ namespace blogGudkov.Domain.DB
             
             
         }
+
+        /// <summary>
+        /// Описание идентификатора сущности модели
+        /// </summary>
+        /// <typeparam name="TEntity">Тип сущности</typeparam>
+        /// <param name="builder">Построитель модели данных</param>
         private static void EntityId<TEntity>(EntityTypeBuilder<TEntity> builder)
                 where TEntity : Entity
         {
@@ -91,4 +104,5 @@ namespace blogGudkov.Domain.DB
                 .HasAnnotation("Npgsql:Serial", true);
         }
     }
+
 }
