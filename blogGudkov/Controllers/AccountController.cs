@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace blogGudkov.Controllers
 {
+    /// <summary>
+    /// Контроллер аккаунта
+    /// </summary>
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
