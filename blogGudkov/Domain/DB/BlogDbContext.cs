@@ -85,8 +85,25 @@ namespace blogGudkov.Domain.DB
 
             #endregion
 
-            
-            
+            #region BlogPost
+
+            modelBuilder.Entity<BlogPost>(b =>
+            {
+                b.ToTable("BlogPosts");
+                EntityId(b);
+                b.Property(x => x.Created)
+                    .HasColumnName("Created")
+                    .IsRequired();
+                b.Property(x => x.Title)
+                    .HasColumnName("Title")
+                    .IsRequired();
+                b.HasOne(x => x.Owner)
+                    .WithMany()
+                    .IsRequired();
+            });
+
+            #endregion
+
         }
 
         /// <summary>
